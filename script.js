@@ -40,18 +40,34 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showSlide(index) {
-    slides.forEach((slide, i) => {
-      const video = slide.querySelector('video');
+  slides.forEach((slide, i) => {
+    const video = slide.querySelector('video');
 
-      if (i === index) {
-        slide.classList.add('active');
+    if (i === index) {
+      slide.classList.add('active');
+
+      // Só controla vídeo fora do iOS
+      if (!isIphone && video) {
         playVideoSafely(video);
-      } else {
-        slide.classList.remove('active');
+      }
+    } else {
+      slide.classList.remove('active');
+
+      // Só controla vídeo fora do iOS
+      if (!isIphone && video) {
         video.pause();
         video.currentTime = 0;
       }
-    });
+    }
+  });
+
+  controls.forEach((btn, i) => {
+    btn.classList.toggle('active', i === index);
+  });
+
+  current = index;
+}
+
 
     controls.forEach((btn, i) => {
       btn.classList.toggle('active', i === index);
