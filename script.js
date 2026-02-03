@@ -5,9 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   =============================== */
   const menuToggle = document.querySelector('.menu-toggle');
   const navbar = document.querySelector('.navbar');
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-  (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
 
+const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
 
   if (menuToggle && navbar) {
@@ -27,6 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let timer;
 
   function playVideoSafely(video) {
+    if (!video) return;
+
     if (video.readyState >= 3) {
       video.currentTime = 0;
       video.play().catch(() => {});
@@ -43,34 +44,25 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showSlide(index) {
-  slides.forEach((slide, i) => {
-    const video = slide.querySelector('video');
+    slides.forEach((slide, i) => {
+      const video = slide.querySelector('video');
 
-    if (i === index) {
-      slide.classList.add('active');
+      if (i === index) {
+        slide.classList.add('active');
 
-      // Só controla vídeo fora do iOS
-      if (!isIphone && video) {
-        playVideoSafely(video);
+        // só controla vídeo fora do iOS
+        if (!isIOS) {
+          playVideoSafely(video);
+        }
+      } else {
+        slide.classList.remove('active');
+
+        if (!isIOS && video) {
+          video.pause();
+          video.currentTime = 0;
+        }
       }
-    } else {
-      slide.classList.remove('active');
-
-      // Só controla vídeo fora do iOS
-      if (!isIphone && video) {
-        video.pause();
-        video.currentTime = 0;
-      }
-    }
-  });
-
-  controls.forEach((btn, i) => {
-    btn.classList.toggle('active', i === index);
-  });
-
-  current = index;
-}
-
+    });
 
     controls.forEach((btn, i) => {
       btn.classList.toggle('active', i === index);
@@ -104,6 +96,3 @@ document.addEventListener('DOMContentLoaded', () => {
     startAuto();
   }
 });
-
-
-
