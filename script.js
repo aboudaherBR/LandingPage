@@ -39,36 +39,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-function showSlide(index) {
-  slides.forEach((slide, i) => {
-    const video = slide.querySelector('video');
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      const video = slide.querySelector('video');
 
-    if (i === index) {
-      slide.classList.add('active');
-
-      // Só tenta tocar vídeo fora do iPhone
-      if (!isIphone) {
+      if (i === index) {
+        slide.classList.add('active');
         playVideoSafely(video);
-      }
-
-    } else {
-      slide.classList.remove('active');
-
-      // No iPhone NÃO pausa nem reseta
-      if (!isIphone) {
+      } else {
+        slide.classList.remove('active');
         video.pause();
         video.currentTime = 0;
       }
-    }
-  });
-
-  controls.forEach((btn, i) => {
-    btn.classList.toggle('active', i === index);
-  });
-
-  current = index;
-}
-
+    });
 
     controls.forEach((btn, i) => {
       btn.classList.toggle('active', i === index);
