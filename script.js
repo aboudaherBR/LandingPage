@@ -5,7 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
   =============================== */
   const menuToggle = document.querySelector('.menu-toggle');
   const navbar = document.querySelector('.navbar');
-  const isIphone = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
+
+
 
   if (menuToggle && navbar) {
     menuToggle.addEventListener('click', () => {
